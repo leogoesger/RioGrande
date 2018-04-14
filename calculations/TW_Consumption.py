@@ -14,4 +14,6 @@ class TW_Consumption:
         self.calculate_consumption()
 
     def calculate_consumption(self):
-        self.consumption = 1.6 * thornthwaite_K[self.month](self.latitude) * ( 10 * self.temperature / self.const_I) ** self.const_a
+        k_a = thornthwaite_K[self.month](self.latitude)
+        temp_factor = ( 10 * self.temperature / self.const_I) ** self.const_a
+        self.consumption = 1.6 * k_a * temp_factor
