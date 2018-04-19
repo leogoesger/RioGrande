@@ -10,8 +10,8 @@ class ConsumptionEsti:
     def __init__(self, time_series_file_name, area_file_name, precipitation_file_name, latitude):
         self.time_series_file_name = time_series_file_name
         self.consumption_matrix = None
-        self.precipitation_dic = createDataDictionary(precipitation_file_name)
-        self.area_dic = createDataDictionary(area_file_name)
+        self.precipitation_dic = createDataDictionary(precipitation_file_name) # Create {year: precipitation}
+        self.area_dic = createDataDictionary(area_file_name) # Create {year: area}
         self.latitude = latitude
         self.get_consumption_matrix()
 
@@ -33,7 +33,7 @@ class ConsumptionEsti:
                     annual_TW_Consumption = [row[0]] # header column
                     for i, temp in enumerate(row):
 
-                        if i != 0 and i < 13:
+                        if i != 0 and i < 13: # From first month till 12th month
                             temperature = float(temp)
                             month = number_to_month[i - 1] # Omit the first column for meta info
                             const_I = current_TW_Constants.const_I
@@ -45,18 +45,18 @@ class ConsumptionEsti:
                     self.consumption_matrix.append(annual_TW_Consumption)
 
     # Account for Precipitation
+    # Removing Precipitation from water consumption for each month in each year
     def remove_precipitation(self):
         for row_index, row in enumerate(self.consumption_matrix):
-            if row_index != 0:
-                if row[0] in self.precipitation_dic:
-                    row[1:] = [round(e - self.precipitation_dic[row[0]]/100, 2) for i, e in enumerate(row) if i > 0]
+            if row_index != 0 and row[0] in self.precipitation_dic:
+                row[1:] = [round(e - self.precipitation_dic[row[0]]/100, 2) for i, e in enumerate(row) if i > 0]
 
-    def multiple_of_area(self):
     # Account for Area
+    # Multiply by area for each month in each year
+    def multiple_of_area(self):
         for row_index, row in enumerate(self.consumption_matrix):
-            if row_index != 0:
-                if row[0] in self.area_dic:
-                    row[1:] = [round(e * self.area_dic[row[0]],2) for i, e in enumerate(row) if i > 0]
+            if row_index != 0 and row[0] in self.area_dic:
+                row[1:] = [round(e * self.area_dic[row[0]],2) for i, e in enumerate(row) if i > 0]
 
     def save_to_csv(self, name):
         np.savetxt("result_files/{}.csv".format(name), self.consumption_matrix, delimiter=",", fmt="%s")
