@@ -5,8 +5,9 @@ area_file_name = 'Areas.csv'
 precipitation_file_name = 'Precipitations.csv'
 
 latitude = 27.14
+location = 'Florido'
 
-current_consumption = ConsumptionEsti(time_series_file_name, area_file_name, precipitation_file_name, latitude)
+current_consumption = ConsumptionEsti(time_series_file_name, area_file_name, precipitation_file_name, latitude, location)
 current_consumption.save_to_csv('consumption')
 current_consumption.remove_precipitation()
 current_consumption.save_to_csv('consumption_without_precipitation')

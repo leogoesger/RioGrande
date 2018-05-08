@@ -1,7 +1,7 @@
 from constant import thornthwaite_K
 
 # TW_Consumption calculate consumption given month, temperature
-# U = 1.6 * k_a * (10 * T_j / const_I) ** const_a
+# U = 1.6 * k_a * (10 * T_j_2 / const_I) ** const_a
 # k_a is an interpolation
 class TW_Consumption:
     def __init__(self, temperature, month, latitude, const_I, const_a):

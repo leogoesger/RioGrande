@@ -17,7 +17,6 @@ thornthwaite_K = {
     "Dec": ip.UnivariateSpline(x, [1.01, 0.99, 0.91, 0.88, 0.85, 0.81, 0.75, 0.70], k=3, s=3),
 }
 
-
 number_to_month = {
     0:"Jan",
     1:"Fed",
@@ -31,4 +30,11 @@ number_to_month = {
     9:"Oct",
     10:"Nov",
     11:"Dec",
+}
+
+suppose_consumptive_use = {
+    "Delicias": 104,
+    "Florido": 91,
+    "Ojinaga": 116,
+    "Salado": 124.8
 }

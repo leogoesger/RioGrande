@@ -1,19 +1,31 @@
 import csv
 import numpy as np
 from constant import number_to_month
-from utils.helpers import createDataDictionary
+from utils.helpers import createDataDictionary, get_matrix_without_headers
 from calculations.TW_Consumption import TW_Consumption
 from calculations.TW_Constants import TW_Constants
 
 class ConsumptionEsti:
 
-    def __init__(self, time_series_file_name, area_file_name, precipitation_file_name, latitude):
+    def __init__(self, time_series_file_name, area_file_name, precipitation_file_name, latitude, location):
         self.time_series_file_name = time_series_file_name
         self.consumption_matrix = None
         self.precipitation_dic = createDataDictionary(precipitation_file_name) # Create {year: precipitation}
         self.area_dic = createDataDictionary(area_file_name) # Create {year: area}
         self.latitude = latitude
+        self.location = location
+        self.const_I = 0
+        self.const_a = 0
+        self.jennet_factory = 0
+        self.get_constants()
         self.get_consumption_matrix()
+
+    def get_constants(self):
+        temperature_matrix = get_matrix_without_headers(self.time_series_file_name)
+        constants = TW_Constants(temperature_matrix, self.latitude, self.location)
+        self.const_I = constants.const_I
+        self.const_a = constants.const_a
+        self.jennet_factory = constants.jennet_factory
 
     def get_consumption_matrix(self):
         with open('raw_files/{}'.format(self.time_series_file_name)) as csvfile:
@@ -25,8 +37,6 @@ class ConsumptionEsti:
 
                 # Omit the first line of meta data for the month
                 if row_index != 0:
-                    # Calculate TW_Constants based on the entire year's temperature
-                    current_TW_Constants = TW_Constants([float(e) for i, e in enumerate(row) if i > 0 ])
 
                     # Calculate TW_Consumption at each individual month by creating an
                     # empty array, then fill the array at each month
@@ -36,10 +46,8 @@ class ConsumptionEsti:
                         if i != 0 and i < 13: # From first month till 12th month
                             temperature = float(temp)
                             month = number_to_month[i - 1] # Omit the first column for meta info
-                            const_I = current_TW_Constants.const_I
-                            const_a = current_TW_Constants.const_a
-                            current_TW_Consumption = TW_Consumption(temperature, month, self.latitude, const_I, const_a)
-                            annual_TW_Consumption.append(round(current_TW_Consumption.consumption, 2))
+                            current_TW_Consumption = TW_Consumption(temperature, month, self.latitude, self.const_I, self.const_a)
+                            annual_TW_Consumption.append(round(current_TW_Consumption.consumption * self.jennet_factory, 2))
 
                     # Append consumption array for this year to the matrix
                     self.consumption_matrix.append(annual_TW_Consumption)
