@@ -1,5 +1,6 @@
 import csv
 
+
 def createDataDictionary(file_name):
 
     # Create a dictionary
@@ -11,9 +12,10 @@ def createDataDictionary(file_name):
         for row_index, row in enumerate(current_file):
             # Omit the first line of meta data of the file
             if row_index != 0:
-                dictionary[row[0]] = float(row[1])
+                dictionary[row[0]] = [float(i) for i in row[1:]]
 
     return dictionary
+
 
 def get_matrix_without_headers(file_name):
     matrix = []

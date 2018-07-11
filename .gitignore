@@ -1,1 +1,4 @@
 my-virtualenv/
+raw_files/
+result_files/
+__pycache__/*

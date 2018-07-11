@@ -1,0 +1,3 @@
+{
+    "python.pythonPath": "${workspaceFolder}/my-virtualenv/bin/python"
+}

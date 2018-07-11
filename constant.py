@@ -1,7 +1,7 @@
 import scipy.interpolate as ip
 
 # Interpolate for k value
-x = [0,10,20,30,35,40,45,50];
+x = [0, 10, 20, 30, 35, 40, 45, 50]
 thornthwaite_K = {
     "Jan": ip.UnivariateSpline(x, [1.04, 1.00, 0.95, 0.90, 0.87, 0.84, 0.80, 0.74], k=3, s=3),
     "Fed": ip.UnivariateSpline(x, [0.94, 0.91, 0.90, 0.87, 0.85, 0.83, 0.81, 0.78], k=3, s=3),
@@ -18,18 +18,18 @@ thornthwaite_K = {
 }
 
 number_to_month = {
-    0:"Jan",
-    1:"Fed",
-    2:"Mar",
-    3:"Apr",
-    4:"May",
-    5:"Jun",
-    6:"Jul",
-    7:"Aug",
-    8:"Sep",
-    9:"Oct",
-    10:"Nov",
-    11:"Dec",
+    0: "Jan",
+    1: "Fed",
+    2: "Mar",
+    3: "Apr",
+    4: "May",
+    5: "Jun",
+    6: "Jul",
+    7: "Aug",
+    8: "Sep",
+    9: "Oct",
+    10: "Nov",
+    11: "Dec",
 }
 
 suppose_consumptive_use = {
@@ -37,4 +37,19 @@ suppose_consumptive_use = {
     "Florido": 91,
     "Ojinaga": 116,
     "Salado": 124.8
+}
+
+
+latitudes = {
+    "Alamo":  26.4466,
+    "Escondido": 28.7055,
+    "LV_SD_SR": 29.2548,
+    "Pecos_Opt1": 35.8270,
+    "Pecos_Opt2_1": 33.3322,
+    "Pecos_Opt2_2": 33.3322,
+    "Pecos_Opt2_3": 33.3322,
+    "Pecos_Opt3":  32.3337,
+    "Pecos_Opt4_1": 31.3249,
+    "Pecos_Opt4_2": 31.3249,
+    "San_Juan": 26.3254,
 }
