@@ -6,7 +6,7 @@ def createDataDictionary(file_name):
     # Create a dictionary
     dictionary = {}
 
-    with open('raw_files/{}'.format(file_name)) as csvfile:
+    with open('input_files/{}'.format(file_name)) as csvfile:
         current_file = csv.reader(csvfile, delimiter=',')
 
         for row_index, row in enumerate(current_file):
@@ -19,7 +19,7 @@ def createDataDictionary(file_name):
 
 def get_matrix_without_headers(file_name):
     matrix = []
-    with open('raw_files/{}'.format(file_name)) as csvfile:
+    with open('input_files/{}'.format(file_name)) as csvfile:
         current_file = csv.reader(csvfile, delimiter=',')
         for row_index, row in enumerate(current_file):
             if row_index != 0:

@@ -38,7 +38,7 @@ class ConsumptionEsti:
         self.jennet_factory = constants.jennet_factory
 
     def get_consumption_matrix(self):
-        with open('raw_files/{}'.format(self.time_series_file_name)) as csvfile:
+        with open('input_files/{}'.format(self.time_series_file_name)) as csvfile:
             current_file = csv.reader(csvfile, delimiter=',')
 
             # Initial empty matrix and add header column
