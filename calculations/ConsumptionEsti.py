@@ -26,6 +26,11 @@ class ConsumptionEsti:
     def get_constants(self):
         temperature_matrix = get_matrix_without_headers(
             self.time_series_file_name)
+
+        # remove negative temperature values
+        for row_index, row in enumerate(temperature_matrix):
+            temperature_matrix[row_index] = [0 if i < 0 else i for i in row]
+
         constants = TW_Constants(
             temperature_matrix, self.latitude, self.location)
         self.const_I = constants.const_I
