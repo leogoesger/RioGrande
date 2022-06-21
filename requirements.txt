@@ -12,5 +12,5 @@ requests==2.18.4
 six==1.11.0
 traitlets==4.3.2
 urllib3==1.22
-numpy==1.14.2
+numpy==1.22.0
 scipy==1.0.1
